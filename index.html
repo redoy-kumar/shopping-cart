@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <title>Shopping Cart</title>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   <link href="style.css" rel="stylesheet">
+</head>
+
+<body>
+
+      <div class="container">
+         <div class="cart">
+            <div class="col-md-12 col-lg-10 mx-auto">
+               <div class="cart-item">
+                  <div class="row">
+                     <div class="col-md-7 center-item">
+                        <img src="images/product-1.png" alt="">
+                        <h5>iPhone 11 128GB Black</h5>
+                     </div>
+
+                     <div class="col-md-5 center-item">
+                        <div class="input-group number-spinner">
+                           <button id="decressPhoneValue" class="btn btn-default"><i class="fa fa-minus"></i></button>
+                           <input type="text" id="currentPhoneNumber" class="form-control text-center" value="1">
+                           <button id="addPhoneValue" class="btn btn-default"><i class="fa fa-plus"></i></button>
+                        </div>
+                        <h5>$ <span id="currentPhoneValue">1219</span></h5>
+                        <img src="images/remove.png" alt="" class="remove-item">
+                     </div>
+                  </div>
+               </div>
+
+               <div class="cart-item">
+                  <div class="row">
+                     <div class="col-md-7 center-item mx-auto">
+                        <img src="images/product-2.png" alt="">
+                        <h5>iPhone 11 Silicone Case - Black</h5>
+                     </div>
+                     <div class="col-md-5 center-item">
+                        <div class="input-group number-spinner">
+                           <button id="decressCaseValue" class="btn btn-default"><i class="fa fa-minus"></i></button>
+                           <input id="currentCaseNumber" type="text" class="form-control text-center" value="1">
+                           <button id="addCaseValue" class="btn btn-default"><i class="fa fa-plus"></i></button>
+
+                        </div>
+                        <h5>$ <span id="currentCaseValue">59</span> </h5>
+                        <img src="images/remove.png" alt="" class="remove-item">
+                     </div>
+                  </div>
+               </div>
+
+               <div class="cart-item">
+                  <div class="row">
+
+                     <div class="col-md-8">
+                        <h5>Subtotal: </h5>
+                        <h5>Tax:</h5>
+                        <h5>Total:</h5>
+                     </div>
+
+                     <div class="col-md-4 status">
+                        <h5>$ <span id="totalCost">1278</span> </h5>
+                        <h5>$0</h5>
+                        <h5>$ <span id="totalCost2">1278</span> </h5>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-md-12 pt-4 pb-4">
+                  <button type="button" class="btn btn-success check-out">Check Out</button>
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <script>
+         // event handler for decreasing phone value 
+         const decreasePhoneBtn = document.getElementById("decressPhoneValue");
+         decreasePhoneBtn.addEventListener('click', function(){
+             const currentNumber = getInputNumberValue("currentPhoneNumber");
+             const currentPhoneValue = getInputNumberText("currentPhoneValue");
+             
+             if(currentNumber>1){
+               updateSpanText("currentPhoneValue",-1*(currentPhoneValue/currentNumber));
+               updateNumberValue("currentPhoneNumber",-1);
+
+               updateSpanText("totalCost",-1*(currentPhoneValue/currentNumber));
+               updateSpanText("totalCost2",-1*(currentPhoneValue/currentNumber));
+             }
+            
+         });
+
+         // event handler for increasing phone value 
+         const addPhoneBtn = document.getElementById("addPhoneValue");
+         addPhoneBtn.addEventListener('click', function(){
+             const currentNumber = getInputNumberValue("currentPhoneNumber");
+             const currentPhoneValue = getInputNumberText("currentPhoneValue");
+             
+             updateSpanText("currentPhoneValue",(currentPhoneValue/currentNumber));
+             updateNumberValue("currentPhoneNumber",1);
+             updateSpanText("totalCost",(currentPhoneValue/currentNumber));
+             updateSpanText("totalCost2",(currentPhoneValue/currentNumber));
+         });
+
+         // event handler for decreasing case value 
+         const decreaseCaseBtn = document.getElementById("decressCaseValue");
+         decreaseCaseBtn.addEventListener('click', function(){
+             const currentNumber = getInputNumberValue("currentCaseNumber");
+             const currentCaseValue = getInputNumberText("currentCaseValue");
+             
+             if(currentNumber>1){
+               updateSpanText("currentCaseValue",-1*(currentCaseValue/currentNumber));
+               updateNumberValue("currentCaseNumber",-1);
+
+               updateSpanText("totalCost",-1*(currentCaseValue/currentNumber));
+               updateSpanText("totalCost2",-1*(currentCaseValue/currentNumber));
+             }
+             
+         });
+
+         // event handler for increasing Case value 
+         const addCaseBtn = document.getElementById("addCaseValue");
+         addCaseBtn.addEventListener('click', function(){
+             const currentNumber = getInputNumberValue("currentCaseNumber");
+             const currentCaseValue = getInputNumberText("currentCaseValue");
+
+             updateSpanText("currentCaseValue",(currentCaseValue/currentNumber));
+             updateNumberValue("currentCaseNumber",1);
+
+             updateSpanText("totalCost",(currentCaseValue/currentNumber));
+             updateSpanText("totalCost2",(currentCaseValue/currentNumber));
+         });
+
+         function getInputNumberText(id){
+            const amount = document.getElementById(id).innerText;
+            const amountNumber = parseFloat(amount);
+            return amountNumber;
+        }
+
+        function getInputNumberValue(id){
+            const amount = document.getElementById(id).value;
+            const amountNumber = parseFloat(amount);
+            return amountNumber;
+        }
+
+        function updateSpanText(id, addedNumber){
+            const current = document.getElementById(id).innerText;
+            const currentNumber = parseFloat(current);
+            const total= addedNumber + currentNumber;
+            document.getElementById(id).innerText = total;
+        }
+
+        function updateNumberValue(id, addedNumber){
+            const current = document.getElementById(id).value;
+            const currentNumber = parseFloat(current);
+            const total= addedNumber + currentNumber;
+            document.getElementById(id).value = total;
+        }
+      </script>
+</body>
+
+</html>
